@@ -54,3 +54,4 @@ Sensitive information that will need to be secured includes the user’s chosen 
 - Password reset ability
 - Various filters for Pokemon search instead of solely having to type in by name
 - Be able to add what moves the Pokemon on your team knows and show total team strength based off of moves and not just types/strengths/weakness
+- Make responsive for various screen sizes
