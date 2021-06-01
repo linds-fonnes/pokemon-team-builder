@@ -25,10 +25,10 @@ class User(db.Model):
         return f"<User #{self.id}: {self.username}"
 
     @classmethod
-    def signup(cls,username,password):
-        """Sign up user"""
+    def register(cls,username,password):
+        """Register a new user"""
 
-        hashed_pwd = bcrypt.generate_passwor_hash(password).decode("UTF-8")
+        hashed_pwd = bcrypt.generate_password_hash(password).decode("UTF-8")
 
         user = User(
             username=username,
@@ -60,4 +60,8 @@ class Team(db.Model):
     pokemon_ids = db.Column(db.JSON, nullable=False)
     user_id = db.Column(db.Integer, db.ForeignKey("users.id", ondelete="CASCADE"),nullable=False)
 
+    def __repr__(self):
+        return f"<{self.user_id}'s team: team #{self.id}, pokemon {self.pokemon_ids} >"
+
     #add a class method to add pokemon to team
+    

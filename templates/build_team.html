@@ -1,0 +1,13 @@
+{% extends 'base.html' %} {% block title %} Build Your Pokemon Team {% endblock
+%} {% block content %}
+<h1>Build Your Pokemon Team</h1>
+<form id="search-form">
+<input type="text" placeholder="Search pokemon by name" id="search-term"></input>
+<button>
+<i class="fa fa-search"></i>
+</button>
+</form>
+<div id="loader" class="o-pokeball c-loader u-tada hidden"></div>
+<div id="search-error" class="hidden">Sorry we don't know that Pokemon!</div>
+
+{% endblock %}
