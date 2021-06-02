@@ -4,7 +4,7 @@ from flask_debugtoolbar import DebugToolbarExtension
 from sqlalchemy.exc import IntegrityError
 import secrets
 from models import db, connect_db, User, Team
-from forms import UserForm
+from forms import UserForm, PokemonForm
 
 CURR_USER_KEY = "curr_user"
 
@@ -83,8 +83,10 @@ def login():
     
     return render_template("login.html", form=form)
 
-@app.route("/build_team")
+@app.route("/build_team", methods=["GET","POST"])
 def build_team():
-    """Displays page to build a user's pokemon team"""
-
-    return render_template("build_team.html")
+    """Allows user to add a Pokemon to their team"""
+    form = PokemonForm()
+    if form.validate_on_submit():
+        print("HI")
+    return render_template("build_team.html", form=form)

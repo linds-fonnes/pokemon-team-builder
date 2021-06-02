@@ -26,12 +26,26 @@ async function getPokemonData(term) {
     await axios
       .get(`https://pokeapi.co/api/v2/pokemon/${term}`)
       .then((response) => {
-        search_term.value = "";
         console.log(response.data);
+        search_term.value = "";
+        document
+          .getElementById("pokemon-img")
+          .setAttribute(
+            "src",
+            response.data.sprites.other.dream_world.front_default
+          );
+        document.getElementById("pokemon-name").textContent =
+          response.data.name.toUpperCase();
+        const stat_name = document.getElementsByClassName("pokemon-stat-name");
+        const base_stat = document.getElementsByClassName("stat");
+
+        for (let i = 0; i < stat_name.length; i++) {
+          stat_name[i].textContent = response.data.stats[i].stat.name;
+          base_stat[i].textContent = response.data.stats[i].base_stat;
+        }
         hideLoader();
       });
   } catch (error) {
-    console.log(error);
     hideLoader();
     search_error.classList.remove("hidden");
   }

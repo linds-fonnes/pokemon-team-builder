@@ -8,3 +8,6 @@ class UserForm(FlaskForm):
     username = StringField("Username")
     password = PasswordField("Password")
 
+class PokemonForm(FlaskForm):
+    """Form to search Pokemon to be added to team"""
+    pokemon = StringField("Pokemon")
