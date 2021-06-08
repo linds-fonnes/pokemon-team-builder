@@ -1,13 +1,18 @@
 from flask_wtf import FlaskForm
-from wtforms import StringField, PasswordField
+from wtforms import StringField, PasswordField, SubmitField
 from wtforms.validators import DataRequired, Length
+
 
 class UserForm(FlaskForm):
     """Form to register a new user"""
 
-    username = StringField("Username")
-    password = PasswordField("Password")
+    username = StringField("Username", validators=[DataRequired(), Length(
+        min=6, message="Username must be at least 6 characters")])
+    password = PasswordField("Password", validators=[DataRequired(), Length(
+        min=8, message="Password must be at least 8 characters")])
+
 
 class PokemonForm(FlaskForm):
     """Form to search Pokemon to be added to team"""
-    pokemon = StringField("Pokemon")
+    pokemon = StringField("Pokemon", validators=[
+                          DataRequired()])

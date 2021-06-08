@@ -4,9 +4,11 @@ from flask_sqlalchemy import SQLAlchemy
 bcrypt = Bcrypt()
 db = SQLAlchemy()
 
+
 def connect_db(app):
     db.app = app
     db.init_app(app)
+
 
 class User(db.Model):
     """User Model"""
@@ -14,10 +16,10 @@ class User(db.Model):
     __tablename__ = "users"
 
     id = db.Column(db.Integer, primary_key=True)
-    
-    username = db.Column(db.String(100),nullable=False,unique=True)
 
-    password = db.Column(db.String(100),nullable=False)
+    username = db.Column(db.String(100), nullable=False, unique=True)
+
+    password = db.Column(db.String(100), nullable=False)
 
     teams = db.relationship("Team", backref="user")
 
@@ -25,7 +27,7 @@ class User(db.Model):
         return f"<User #{self.id}: {self.username}"
 
     @classmethod
-    def register(cls,username,password):
+    def register(cls, username, password):
         """Register a new user"""
 
         hashed_pwd = bcrypt.generate_password_hash(password).decode("UTF-8")
@@ -37,19 +39,20 @@ class User(db.Model):
 
         db.session.add(user)
         return user
-    
+
     @classmethod
-    def authenticate(cls,username,password):
+    def authenticate(cls, username, password):
         """Finder user with 'username' and 'password'"""
 
         user = cls.query.filter_by(username=username).first()
 
         if user:
-            is_auth = bcrypt.check_password_hash(user.password,password)
+            is_auth = bcrypt.check_password_hash(user.password, password)
             if is_auth:
                 return user
 
         return False
+
 
 class Team(db.Model):
     """Team Model"""
@@ -58,10 +61,8 @@ class Team(db.Model):
 
     id = db.Column(db.Integer, primary_key=True)
     pokemon_ids = db.Column(db.JSON, nullable=False)
-    user_id = db.Column(db.Integer, db.ForeignKey("users.id", ondelete="CASCADE"),nullable=False)
+    user_id = db.Column(db.Integer, db.ForeignKey(
+        "users.id", ondelete="CASCADE"), nullable=False)
 
     def __repr__(self):
         return f"<{self.user_id}'s team: team #{self.id}, pokemon {self.pokemon_ids} >"
-
-    #add a class method to add pokemon to team
-    

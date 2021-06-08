@@ -1,23 +1,48 @@
 {% extends 'base.html' %} {% block title %} Build Your Pokemon Team {% endblock
 %} {% block content %}
 <h1>Build Your Pokemon Team</h1>
+{% if g.user %}
+<a href="/logout">Logout</a>
+<a href="/profile">Profile</a>
+{% endif %}
 <form id="search-form">
 <input type="text" placeholder="Search pokemon by name" id="search-term"></input>
 <button>
 <i class="fa fa-search"></i>
 </button>
 </form>
+<!-- <form id="search-pokemon-form" action="/build_team">
+  {{ form.hidden_tag() }} {% for field in form if field.widget.input_type !=
+  'hidden' %}
+  <p>
+    {{ field.label }} {{ field }} {% for error in field.errors %} {{ error }} {%
+    endfor %}
+  </p>
+  {% endfor %}
+  <button type="submit">
+    <i class="fa fa-search"></i>
+  </button>
+</form>
+-->
 <div id="loader" class="o-pokeball c-loader u-tada hidden"></div>
 <div id="search-error" class="hidden">Sorry we don't know that Pokemon!</div>
 <div id="pokemon-card">
-    <p id="pokemon-name"></p><span id="pokemon-type"></span>
-    <img id="pokemon-img">
-    <p class="pokemon-stat-name"></p><span class="pokemon-stat"></span>
-    <p class="pokemon-stat-name"></p><span class="pokemon-stat"></span>
-    <p class="pokemon-stat-name"></p><span class="pokemon-stat"></span>
-    <p class="pokemon-stat-name"></p><span class="pokemon-stat"></span>
-    <p class="pokemon-stat-name"></p><span class="pokemon-stat"></span>
-    <p class="pokemon-stat-name"></p><span class="pokemon-stat"></span>
+  <p id="pokemon-name"></p>
+  <span id="pokemon-type"></span>
+  <img id="pokemon-img" />
+  <p class="pokemon-stat-name"></p>
+  <span class="pokemon-stat"></span>
+  <p class="pokemon-stat-name"></p>
+  <span class="pokemon-stat"></span>
+  <p class="pokemon-stat-name"></p>
+  <span class="pokemon-stat"></span>
+  <p class="pokemon-stat-name"></p>
+  <span class="pokemon-stat"></span>
+  <p class="pokemon-stat-name"></p>
+  <span class="pokemon-stat"></span>
+  <p class="pokemon-stat-name"></p>
+  <span class="pokemon-stat"></span>
+  <button id="add-btn" class="hidden" formmaction="/">Add to Team</button>
 </div>
 
 {% endblock %}

@@ -51,10 +51,8 @@ async function getPokemonData(term) {
           stat_name[i].textContent = response.data.stats[i].stat.name;
           base_stat[i].textContent = response.data.stats[i].base_stat;
         }
-        const card = document.getElementById("pokemon-card");
-        const btn = document.createElement("button");
-        btn.textContent = "Add to Team";
-        card.appendChild(btn);
+        
+        document.getElementById("add-btn").classList.remove("hidden")
         hideLoader();
       });
   } catch (error) {
