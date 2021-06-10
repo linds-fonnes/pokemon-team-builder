@@ -1,3 +1,4 @@
+from flask.helpers import make_response
 import requests
 from flask import Flask, request, redirect, render_template, flash, redirect, session, g, jsonify
 from flask_debugtoolbar import DebugToolbarExtension
@@ -5,14 +6,14 @@ from sqlalchemy.exc import IntegrityError
 from secret import secret_key
 from models import db, connect_db, User, Team
 from forms import UserForm, PokemonForm
+from helpers import getPokemonData
+import pokepy
 
 CURR_USER_KEY = "curr_user"
-
 app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql:///team_builder_db'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 app.config['SQLALCHEMY_ECHO'] = True
-
 
 app.config['SECRET_KEY'] = secret_key
 app.config['DEBUG_TB_INTERCEPT_REDIRECTS'] = False
@@ -82,8 +83,7 @@ def login():
 
         if user:
             login_user(user)
-            flash(f"Logged in, {user.username}")
-            return redirect("/build_team")
+            return redirect("/teambuilder")
 
         flash("Username or password not valid")
 
@@ -103,14 +103,20 @@ def user_profile():
     return render_template("profile.html")
 
 
-@app.route("/build_team")
-def build_team():
-    """Displays team building page and search pokemon"""
-    form = PokemonForm()
-    return render_template("build_team.html", form=form)
+@app.route("/teambuilder")
+def display_page():
+    """Displays team building page"""
+    return render_template("build_team.html")
+
+
+@app.route("/search_pokemon", methods=["POST"])
+def search_pokemon():
+    """Handle search request for a specific Pokemon"""
+    name = request.json["name"]
+    data = getPokemonData(name)
+    return make_response(jsonify(data), 200)
 
 
 @app.route("/add_pokemon", methods=["POST"])
 def add_pokemon():
-    """Adds a pokemon to a User's team"""
-    return ""
+    """Adds a pokemon to a team"""

@@ -62,7 +62,7 @@ class Team(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     pokemon_ids = db.Column(db.JSON, nullable=False)
     user_id = db.Column(db.Integer, db.ForeignKey(
-        "users.id", ondelete="CASCADE"), nullable=False)
+        "users.id", ondelete="CASCADE"), nullable=True)
 
     def __repr__(self):
         return f"<{self.user_id}'s team: team #{self.id}, pokemon {self.pokemon_ids} >"

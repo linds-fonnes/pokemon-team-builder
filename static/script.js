@@ -1,65 +1,56 @@
-const search_term = document.getElementById("search-term");
-const search_form = document.getElementById("search-form");
-const search_error = document.getElementById("search-error");
-const loader = document.getElementById("loader");
-
-function handleSubmit(evt) {
-  evt.preventDefault();
-  getPokemonData(search_term.value.toLowerCase());
-}
-
 function displayLoader() {
-  loader.classList.remove("hidden");
+  $("#loader").show()
   setTimeout(() => {
-    loader.classList.add("hidden");
+    $("#loader").hide()
   }, 5000);
 }
 
 function hideLoader() {
-  loader.classList.add("hidden");
+  $("#loader").hide()
 }
 
-async function getPokemonData(term) {
-  search_error.classList.add("hidden");
-  displayLoader();
+
+function displayPokemonCard(resp){
+  $("#search-error").hide()
+  $("#pokemon-stats").empty()
+  $("#pokemon-card").show()
+  $("#search-term").val("")
+  $("#pokemon-name").text(resp.name.toUpperCase()).append(`<span> ${resp.types} </span>`)
+  $("#pokemon-img").attr("src",resp.image)
+  for(stat of resp.stats){
+    $("#pokemon-stats").append(`<p>${stat.stat_name} | ${stat.base_stat}</p>`)
+  }
+  $("#add-btn").show()
+}
+
+function displaySearchError(){
+  $("#search-error").show()
+  hideLoader()
+  $("#pokemon-card").hide()
+}
+
+async function processPokemonSearch(evt){
+  evt.preventDefault()
+  let name = $("#search-term").val()
+  let response;
+  displayLoader()
   try {
-    await axios
-      .get(`https://pokeapi.co/api/v2/pokemon/${term}`)
-      .then((response) => {
-        console.log(response.data);
-        search_term.value = "";
-        document
-          .getElementById("pokemon-img")
-          .setAttribute(
-            "src",
-            response.data.sprites.other.dream_world.front_default
-          );
-        document.getElementById("pokemon-card").classList.remove("hidden");
-        const pokemon_name = document.getElementById("pokemon-name");
-        pokemon_name.textContent = response.data.name.toUpperCase();
-        const types = response.data.types;
-        for (let i = 0; i < types.length; i++) {
-          const type_el = document.createElement("span");
-          type_el.textContent = ` ${response.data.types[i].type.name} `;
-          pokemon_name.appendChild(type_el);
-        }
-
-        const stat_name = document.getElementsByClassName("pokemon-stat-name");
-        const base_stat = document.getElementsByClassName("pokemon-stat");
-
-        for (let i = 0; i < stat_name.length; i++) {
-          stat_name[i].textContent = response.data.stats[i].stat.name;
-          base_stat[i].textContent = response.data.stats[i].base_stat;
-        }
-        
-        document.getElementById("add-btn").classList.remove("hidden")
-        hideLoader();
-      });
-  } catch (error) {
-    hideLoader();
-    search_error.classList.remove("hidden");
-    document.getElementById("pokemon-card").classList.add("hidden");
+    response = await axios.post("/search_pokemon",{name: name}).then((response)=>{
+      console.log(response.data)
+      displayPokemonCard(response.data)
+      hideLoader()
+    })
+    
+  }
+  catch(error){
+    displaySearchError()
   }
 }
 
-search_form.addEventListener("submit", handleSubmit);
+async function addPokemon(){
+  console.log("HI")
+}
+
+
+$("#search-form").on("submit",processPokemonSearch)
+$("#add-btn").on("click",addPokemon)
