@@ -10,9 +10,3 @@ class UserForm(FlaskForm):
         min=6, message="Username must be at least 6 characters")])
     password = PasswordField("Password", validators=[DataRequired(), Length(
         min=8, message="Password must be at least 8 characters")])
-
-
-class PokemonForm(FlaskForm):
-    """Form to search Pokemon to be added to team"""
-    pokemon = StringField("Pokemon", validators=[
-                          DataRequired()])

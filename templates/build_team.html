@@ -13,7 +13,9 @@
 </form>
 
 <div id="loader" class="o-pokeball c-loader u-tada hidden"></div>
+
 <div id="search-error" class="hidden">Sorry we don't know that Pokemon!</div>
+
 <div id="pokemon-card">
   <p id="pokemon-name"></p>
   <span id="pokemon-type"></span>
@@ -21,6 +23,8 @@
   <div id="pokemon-stats"></div>
   <button id="add-btn" class="hidden" formmaction="/">Add to Team</button>
 </div>
+<div id="team-error" class="hidden">Team is full! Please delete a Pokemon to add another</div>
+<div id="team-list"></div>
 
 
 {% endblock %}

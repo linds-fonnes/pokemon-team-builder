@@ -1,3 +1,11 @@
+let counter = 0;
+if(localStorage.length > 0){
+  counter = localStorage.length;
+  for(let i = 0; i < localStorage.length; i++){
+    $("#team-list").append(`<img class="pokemon-sprite" src="${localStorage.getItem(localStorage.key(i))}"/>`).data("id",localStorage.getItem(localStorage.key(i))).append(`<button class="remove-pokemon">X</button>`)
+  }
+}
+
 function displayLoader() {
   $("#loader").show()
   setTimeout(() => {
@@ -11,7 +19,6 @@ function hideLoader() {
 
 
 function displayPokemonCard(resp){
-  $("#search-error").hide()
   $("#pokemon-stats").empty()
   $("#pokemon-card").show()
   $("#search-term").val("")
@@ -29,16 +36,24 @@ function displaySearchError(){
   $("#pokemon-card").hide()
 }
 
+function displayTeamError(){
+  $("#team-error").show()
+}
+
+let pokemon_data;
 async function processPokemonSearch(evt){
   evt.preventDefault()
   let name = $("#search-term").val()
-  let response;
+  
   displayLoader()
   try {
     response = await axios.post("/search_pokemon",{name: name}).then((response)=>{
-      console.log(response.data)
+      pokemon_data = response.data
+      console.log(pokemon_data)
+      $("#search-error").hide()
       displayPokemonCard(response.data)
       hideLoader()
+      return pokemon_data
     })
     
   }
@@ -47,10 +62,28 @@ async function processPokemonSearch(evt){
   }
 }
 
-async function addPokemon(){
-  console.log("HI")
+/// change this to display sprite when adding pokemon and save id as data attr and then send a post request after each add to team that retrieves team stats and displays them
+
+
+
+function displayAddedPokemon(){
+  console.log(pokemon_data.id)
+  if(counter < 6){
+    $("#team-list").append(`<img class="pokemon-sprite" src="${pokemon_data.sprite}"/>`).data("id",pokemon_data.id).append(`<button class="remove-pokemon">X</button>`)
+    counter++;
+    localStorage.setItem(pokemon_data.id,pokemon_data.sprite)
+  }
+  else $("#team-error").show()
 }
 
+function removePokemon(){
+  console.log($(this).prev().data())
+  $("#team-error").hide()
+  $(this).prev().remove()
+  $(this).remove()
+  counter--
+}
 
 $("#search-form").on("submit",processPokemonSearch)
-$("#add-btn").on("click",addPokemon)
+$("#add-btn").on("click",displayAddedPokemon)
+$("#team-list").on("click", ".remove-pokemon", removePokemon)

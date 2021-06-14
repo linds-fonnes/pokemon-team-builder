@@ -5,11 +5,12 @@ from flask_debugtoolbar import DebugToolbarExtension
 from sqlalchemy.exc import IntegrityError
 from secret import secret_key
 from models import db, connect_db, User, Team
-from forms import UserForm, PokemonForm
+from forms import UserForm
 from helpers import getPokemonData
 import pokepy
 
 CURR_USER_KEY = "curr_user"
+CURR_TEAM = []
 app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql:///team_builder_db'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
@@ -67,7 +68,7 @@ def register():
             return render_template("register.html", form=form)
 
         login_user(user)
-        return redirect("/")
+        return redirect("/teambuilder")
 
     else:
         return render_template("register.html", form=form)
@@ -117,6 +118,23 @@ def search_pokemon():
     return make_response(jsonify(data), 200)
 
 
-@app.route("/add_pokemon", methods=["POST"])
-def add_pokemon():
-    """Adds a pokemon to a team"""
+# @app.route("/add_pokemon", methods=["POST"])
+#
+# #remove this route and add a route that obtains team data (obtains team data, saves as curr_team [] from ajax post request), on save team it will take curr_team and save that in the db
+
+# def add_pokemon():
+#     """Adds a pokemon to a team"""
+#     data = request.json["data"]
+
+#     if len(CURR_TEAM) >= 6:
+#         print("MAX LENGTH OF TEAM, DELETE A MEMBER")
+#         return ""
+
+#     CURR_TEAM.append(data["id"])
+#     for pokemon in CURR_TEAM:
+#         data = getPokemonData(pokemon)
+#     print(data)
+#     print(len(CURR_TEAM))
+#     print(CURR_TEAM)
+
+#     return make_response(jsonify(data), 200)
