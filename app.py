@@ -7,10 +7,9 @@ from secret import secret_key
 from models import db, connect_db, User, Team
 from forms import UserForm
 from helpers import getPokemonData
-import pokepy
 
 CURR_USER_KEY = "curr_user"
-CURR_TEAM = []
+
 app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql:///team_builder_db'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
@@ -49,6 +48,8 @@ def logout_user():
 @app.route("/")
 def home_page():
     """Display home page"""
+    if g.user:
+        return redirect("/teambuilder")
     return render_template("home.html")
 
 
@@ -84,7 +85,7 @@ def login():
 
         if user:
             login_user(user)
-            return redirect("/teambuilder")
+            return redirect("/team_builder")
 
         flash("Username or password not valid")
 
@@ -104,13 +105,13 @@ def user_profile():
     return render_template("profile.html")
 
 
-@app.route("/teambuilder")
+@app.route("/team_builder")
 def display_page():
     """Displays team building page"""
     return render_template("build_team.html")
 
 
-@app.route("/search_pokemon", methods=["POST"])
+@app.route("/team_builder/search_pokemon", methods=["POST"])
 def search_pokemon():
     """Handle search request for a specific Pokemon"""
     name = request.json["name"]
@@ -118,23 +119,12 @@ def search_pokemon():
     return make_response(jsonify(data), 200)
 
 
-# @app.route("/add_pokemon", methods=["POST"])
-#
-# #remove this route and add a route that obtains team data (obtains team data, saves as curr_team [] from ajax post request), on save team it will take curr_team and save that in the db
-
-# def add_pokemon():
-#     """Adds a pokemon to a team"""
-#     data = request.json["data"]
-
-#     if len(CURR_TEAM) >= 6:
-#         print("MAX LENGTH OF TEAM, DELETE A MEMBER")
-#         return ""
-
-#     CURR_TEAM.append(data["id"])
-#     for pokemon in CURR_TEAM:
-#         data = getPokemonData(pokemon)
-#     print(data)
-#     print(len(CURR_TEAM))
-#     print(CURR_TEAM)
-
-#     return make_response(jsonify(data), 200)
+@app.route("/team_builder/save_team", methods=["POST"])
+def save_team():
+    """Saves team to db associated with user"""
+    print("****************************************HELLO****************************************")
+    team = request.json["data"]
+    print(team)
+    team_name = request.json["team_name"]
+    print(team_name)
+    return redirect("/team_builder")

@@ -1,10 +1,30 @@
 let counter = 0;
-if(localStorage.length > 0){
-  counter = localStorage.length;
-  for(let i = 0; i < localStorage.length; i++){
-    $("#team-list").append(`<img class="pokemon-sprite" src="${localStorage.getItem(localStorage.key(i))}"/>`).data("id",localStorage.getItem(localStorage.key(i))).append(`<button class="remove-pokemon">X</button>`)
+
+function loadLocalStorage(){
+  let storageArray = JSON.parse(localStorage.getItem("team"))
+  if(storageArray){
+    counter = storageArray.length;
+    for(let i = 0; i < storageArray.length; i++){
+      let new_pokemon = $("#team-list").append(`<img class="pokemon-sprite" id="${storageArray[i].id}" src="${storageArray[i].sprite}"/>`).append(`<button class="remove-pokemon">X</button>`)
+    }
   }
 }
+ 
+let team = []
+function addToLocalStorage(data){
+  let new_pokemon = {}
+  new_pokemon.id = data.id
+  new_pokemon.sprite = data.sprite 
+  team.push(new_pokemon)
+  localStorage.setItem("team",JSON.stringify(team))
+}
+
+function removeFromLocalStorage(){
+  let storageArray = JSON.parse(localStorage.getItem("team"))
+  const updatedArray = storageArray.filter((pokemon) => pokemon.id != $(this).attr("id"))
+  localStorage.setItem("team",JSON.stringify(updatedArray))
+}
+
 
 function displayLoader() {
   $("#loader").show()
@@ -47,7 +67,7 @@ async function processPokemonSearch(evt){
   
   displayLoader()
   try {
-    response = await axios.post("/search_pokemon",{name: name}).then((response)=>{
+    response = await axios.post("/team_builder/search_pokemon",{name: name}).then((response)=>{
       pokemon_data = response.data
       console.log(pokemon_data)
       $("#search-error").hide()
@@ -62,28 +82,31 @@ async function processPokemonSearch(evt){
   }
 }
 
-/// change this to display sprite when adding pokemon and save id as data attr and then send a post request after each add to team that retrieves team stats and displays them
-
-
 
 function displayAddedPokemon(){
-  console.log(pokemon_data.id)
   if(counter < 6){
-    $("#team-list").append(`<img class="pokemon-sprite" src="${pokemon_data.sprite}"/>`).data("id",pokemon_data.id).append(`<button class="remove-pokemon">X</button>`)
+    let new_pokemon = $("#team-list").append(`<img class="pokemon-sprite" id="${pokemon_data.id}" src="${pokemon_data.sprite}"/>`).append(`<button class="remove-pokemon">X</button>`)
     counter++;
-    localStorage.setItem(pokemon_data.id,pokemon_data.sprite)
+    addToLocalStorage(pokemon_data)
   }
   else $("#team-error").show()
 }
 
 function removePokemon(){
-  console.log($(this).prev().data())
+  removeFromLocalStorage.call($(this).prev())
   $("#team-error").hide()
   $(this).prev().remove()
   $(this).remove()
   counter--
 }
 
+async function saveTeam(){
+  let storageArray = JSON.parse(localStorage.getItem("team"))
+  response = await axios.post("/team_builder/save_team",{data: storageArray, team_name: $("#team-name").val()})
+}
+
+$(document).ready(loadLocalStorage)
 $("#search-form").on("submit",processPokemonSearch)
 $("#add-btn").on("click",displayAddedPokemon)
 $("#team-list").on("click", ".remove-pokemon", removePokemon)
+$("#save-team").on("submit", saveTeam)

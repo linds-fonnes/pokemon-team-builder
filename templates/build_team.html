@@ -21,10 +21,23 @@
   <span id="pokemon-type"></span>
   <img id="pokemon-img" />
   <div id="pokemon-stats"></div>
-  <button id="add-btn" class="hidden" formmaction="/">Add to Team</button>
+  <button id="add-btn" class="hidden">Add to Team</button>
 </div>
+
 <div id="team-error" class="hidden">Team is full! Please delete a Pokemon to add another</div>
+
 <div id="team-list"></div>
+
+{% if g.user %}
+<div id="save-team" >
+  <form>
+    <input type="text" id="team-name" placeholder="Name your team">
+    <button type="submit">Save</button>
+  </form>
+</div>
+{% else %}
+<p><a href="/login">Login</a> or <a href="/register">Register</a> to save your team</p>
+{% endif %}
 
 
 {% endblock %}
