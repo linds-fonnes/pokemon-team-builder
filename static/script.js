@@ -100,9 +100,17 @@ function removePokemon(){
   counter--
 }
 
-async function saveTeam(){
+
+async function saveTeam(evt){
+  evt.preventDefault()
   let storageArray = JSON.parse(localStorage.getItem("team"))
-  response = await axios.post("/team_builder/save_team",{data: storageArray, team_name: $("#team-name").val()})
+  let response;
+  try{
+    response = await axios.post("/team_builder/save_team",{data: storageArray, team_name: $("#team-name").val()})
+    $("#save-team-message").text(response.data.message)
+  } catch(error) {
+    $("#save-team-message").text(error.response.data.message)
+  }
 }
 
 $(document).ready(loadLocalStorage)

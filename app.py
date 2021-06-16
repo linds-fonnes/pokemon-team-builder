@@ -29,9 +29,12 @@ def add_global_user():
 
     if CURR_USER_KEY in session:
         g.user = User.query.get(session[CURR_USER_KEY])
+        print(g.user)
+        print(session[CURR_USER_KEY])
 
     else:
         g.user = None
+        # print(session[CURR_USER_KEY])
 
 
 def login_user(user):
@@ -49,7 +52,7 @@ def logout_user():
 def home_page():
     """Display home page"""
     if g.user:
-        return redirect("/teambuilder")
+        return redirect("/team_builder")
     return render_template("home.html")
 
 
@@ -69,7 +72,7 @@ def register():
             return render_template("register.html", form=form)
 
         login_user(user)
-        return redirect("/teambuilder")
+        return redirect("/team_builder")
 
     else:
         return render_template("register.html", form=form)
@@ -102,6 +105,11 @@ def logout():
 @app.route("/profile")
 def user_profile():
     """Allows user to view their saved teams on their profile page"""
+    if g.user is None:
+        flash("Please sign into your account to view your profile")
+        return redirect("/")
+    user = g.user
+    print(user.teams)
     return render_template("profile.html")
 
 
@@ -122,9 +130,26 @@ def search_pokemon():
 @app.route("/team_builder/save_team", methods=["POST"])
 def save_team():
     """Saves team to db associated with user"""
-    print("****************************************HELLO****************************************")
-    team = request.json["data"]
-    print(team)
-    team_name = request.json["team_name"]
-    print(team_name)
-    return redirect("/team_builder")
+    try:
+        team_data = request.json["data"]
+        team = []
+        for pokemon in team_data:
+            team.append(pokemon["id"])
+        name = request.json["team_name"]
+        new_team = Team(name=name, pokemon_ids=team, user_id=g.user.id)
+        db.session.add(new_team)
+        db.session.commit()
+        return make_response(jsonify({"message": "Team saved successfully"}), 200)
+    except:
+        return make_response(jsonify({"message": "Input is required"}), 400)
+
+
+@app.after_request
+def add_header(req):
+    """Add non-caching headers on every request."""
+
+    req.headers["Cache-Control"] = "no-cache, no-store, must-revalidate"
+    req.headers["Pragma"] = "no-cache"
+    req.headers["Expires"] = "0"
+    req.headers['Cache-Control'] = 'public, max-age=0'
+    return req

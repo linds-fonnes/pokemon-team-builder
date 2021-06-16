@@ -17,7 +17,7 @@ class User(db.Model):
 
     id = db.Column(db.Integer, primary_key=True)
 
-    username = db.Column(db.String(100), nullable=False, unique=True)
+    username = db.Column(db.String(100), nullable=False)
 
     password = db.Column(db.String(100), nullable=False)
 
@@ -66,4 +66,4 @@ class Team(db.Model):
         "users.id", ondelete="CASCADE"), nullable=True)
 
     def __repr__(self):
-        return f"<{self.user_id}'s team: team #{self.id}, pokemon {self.pokemon_ids} >"
+        return f"< User {self.user_id}'s team: team #{self.id}, name: {self.name}, pokemons: {self.pokemon_ids} >"

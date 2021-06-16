@@ -20,6 +20,11 @@
     <title>{% block title %} {% endblock %}</title>
   </head>
   <body>
+    <div>
+      {% for message in get_flashed_messages() %}
+      <div>{{message}}</div>
+      {% endfor %}
+    </div>
     {% block content %} {% endblock %}
   </body>
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
