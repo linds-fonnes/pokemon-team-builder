@@ -103,14 +103,40 @@ def logout():
 
 
 @app.route("/profile")
-def user_profile():
+def display_user_profile():
     """Allows user to view their saved teams on their profile page"""
     if g.user is None:
         flash("Please sign into your account to view your profile")
         return redirect("/")
     user = g.user
     print(user.teams)
-    return render_template("profile.html")
+    return render_template("profile.html", teams=user.teams)
+
+
+@app.route("/profile/<int:team_id>")
+def display_team(team_id):
+    """Displays a saved team's details"""
+    if g.user is None:
+        flash("Please sign into your account to view your team")
+        return redirect("/")
+    team = Team.query.get_or_404(team_id)
+    team_data = []
+    for id in team.pokemon_ids:
+        team_data.append(getPokemonData(id))
+    return render_template("team_details.html", team_data=team_data, team=team)
+
+
+@app.route("/profile/<int:team_id>/delete", methods=["GET", "DELETE"])
+def delete_team(team_id):
+    """Deletes a team from db"""
+    if g.user is None:
+        flash("Please sign into your account to delete your team")
+        return redirect("/")
+
+    team = Team.query.get_or_404(team_id)
+    db.session.delete(team)
+    db.session.commit()
+    return redirect("/profile")
 
 
 @app.route("/team_builder")

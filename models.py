@@ -66,4 +66,4 @@ class Team(db.Model):
         "users.id", ondelete="CASCADE"), nullable=True)
 
     def __repr__(self):
-        return f"< User {self.user_id}'s team: team #{self.id}, name: {self.name}, pokemons: {self.pokemon_ids} >"
+        return f"< User id {self.user_id}'s team: team id: {self.id}, name: {self.name}, pokemon_ids: {self.pokemon_ids} >"

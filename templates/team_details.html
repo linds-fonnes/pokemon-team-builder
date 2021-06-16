@@ -1,0 +1,10 @@
+{% extends 'base.html' %} {% block title %} {{team.name}} Details {% endblock %}
+{% block content %}
+<a href="/profile">Profile</a>
+<form method="DELETE" action="/profile/{{team.id}}/delete">
+  <button>Delete Team</button>
+</form>
+<h1>{{team.name}}</h1>
+{% for pokemon in team_data %}
+<img src="{{pokemon.sprite}}" />
+{% endfor %} {% endblock %}
