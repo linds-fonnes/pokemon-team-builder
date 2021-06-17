@@ -1,7 +1,8 @@
 {% extends 'base.html' %} {% block title %} {{g.user.username}} Profile {%
 endblock %} {% block content %}
-
+<a href="/team_builder">Team Builder</a>
 <h1>{{g.user.username}}'s Teams</h1>
+
 {% for team in teams %}
 <a href="/profile/{{team.id}}">{{team.name}}</a>
 {% endfor %} {% endblock %}

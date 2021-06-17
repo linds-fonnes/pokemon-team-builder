@@ -6,7 +6,7 @@ from sqlalchemy.exc import IntegrityError
 from secret import secret_key
 from models import db, connect_db, User, Team
 from forms import UserForm
-from helpers import getPokemonData
+from helpers import getPokemonData, getDamageRelations
 
 CURR_USER_KEY = "curr_user"
 
@@ -151,6 +151,15 @@ def search_pokemon():
     name = request.json["name"]
     data = getPokemonData(name)
     return make_response(jsonify(data), 200)
+
+
+@app.route("/team_builder/damage_relations", methods=["POST"])
+def get_damage_relations():
+    team_data = request.json["data"]
+
+    for pokemon in team_data:
+        print(getDamageRelations(pokemon["types"]))
+    return ""
 
 
 @app.route("/team_builder/save_team", methods=["POST"])

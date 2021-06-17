@@ -60,7 +60,7 @@ class Team(db.Model):
     __tablename__ = "teams"
 
     id = db.Column(db.Integer, primary_key=True)
-    name = db.Column(db.String(80), nullable=False, unique=True)
+    name = db.Column(db.String(80), nullable=False)
     pokemon_ids = db.Column(db.JSON, nullable=False)
     user_id = db.Column(db.Integer, db.ForeignKey(
         "users.id", ondelete="CASCADE"), nullable=True)
