@@ -92,10 +92,33 @@ async function processPokemonSearch(evt) {
   }
 }
 
+
+function displayDualTypeDamageRelations(data){
+  console.log("THERES TWO TYPES", data)
+  let weak_arr = []
+  let immune_arr = []
+  for(type of data){
+    console.log(type)
+    //for each type of current pokemon, push weakness into a single arr
+    for(let i = 0; i < type.weak_against.length; i++){
+      weak_arr.push(type.weak_against[i])
+    }
+    //for each type of current pokemon, push immunities into a single arr
+    for(let i =0; i < type.immune_to.length; i++){
+      immune_arr.push(type.immune_to[i])
+    }
+    //filter through the weaknesses and immunities and return only the type names that aren't in the immunity arr
+    let filtered_arr = weak_arr.filter((word) => !immune_arr.includes(word))
+    console.log("HERE",immune_arr,weak_arr,filtered_arr) 
+  }
+}
+
 function displayDamageRelations(resp){
   $(".stat").html("0")
   for(data of resp.data){
-    console.log(data.damage_relations)
+    if(data.damage_relations.length > 1) {
+      return displayDualTypeDamageRelations(data.damage_relations)
+    }
     for(let i = 0; i < data.damage_relations.length; i++){
       console.log(data.damage_relations[i])
       console.log(data.damage_relations[i].type)
