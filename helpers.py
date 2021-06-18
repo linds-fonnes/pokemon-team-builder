@@ -32,6 +32,30 @@ def getPokemonData(name):
     return response
 
 
+def getDoubleDamage(req):
+    """Retrieves just the names of what types give double damage against current pokemon's type"""
+    names = []
+    for relation in req.json()["damage_relations"]["double_damage_from"]:
+        names.append(relation["name"])
+    return names
+
+
+def getImmuneTo(req):
+    """Retrieves just the names of what types current pokemon is immune to"""
+    names = []
+    for relation in req.json()["damage_relations"]["no_damage_from"]:
+        names.append(relation["name"])
+    return names
+
+
+def getResist(req):
+    """Retrives just the names of what types of pokemon only give half damage against current pokemon's type"""
+    names = []
+    for relation in req.json()["damage_relations"]["half_damage_from"]:
+        names.append(relation["name"])
+    return names
+
+
 def getDamageRelations(types):
     """Retrieves damage relations for each type on team"""
     damage_relations = {"damage_relations": []}
@@ -39,9 +63,9 @@ def getDamageRelations(types):
         request = requests.get(f"https://pokeapi.co/api/v2/type/{type}/")
         response = {
             "type": type,
-            "weak_against": request.json()["damage_relations"]["double_damage_from"],
-            "immune_to": request.json()["damage_relations"]["no_damage_from"],
-            "resists": request.json()["damage_relations"]["half_damage_from"]
+            "weak_against": getDoubleDamage(request),
+            "immune_to": getImmuneTo(request),
+            "resists": getResist(request)
         }
         damage_relations["damage_relations"].append(response)
     return damage_relations

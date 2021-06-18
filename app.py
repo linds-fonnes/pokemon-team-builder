@@ -157,12 +157,15 @@ def search_pokemon():
 def get_damage_relations():
     team_data = request.json["data"]
 
+    data = {"data": []}
     for pokemon in team_data:
-        print(getDamageRelations(pokemon["types"]))
-    return ""
+        relations = getDamageRelations(pokemon["types"])
+        data["data"].append(relations)
+    print("*************************************", data)
+    return make_response(jsonify(data), 200)
 
 
-@app.route("/team_builder/save_team", methods=["POST"])
+@ app.route("/team_builder/save_team", methods=["POST"])
 def save_team():
     """Saves team to db associated with user"""
     try:
@@ -179,7 +182,7 @@ def save_team():
         return make_response(jsonify({"message": "Input is required"}), 400)
 
 
-@app.after_request
+@ app.after_request
 def add_header(req):
     """Add non-caching headers on every request."""
 
