@@ -109,26 +109,7 @@ function displayDualTypeDamageRelations(type){
     let curr_value = parseInt($(`.${weakness}#weak_against`).text())
     $(`.${weakness}#weak_against`).html(`${curr_value + 1}`)
   }
-  // for(let i = 0; i < data.damage_relations.length; i++){
-  //   console.log(data.damage_relations[i])
-  //   console.log(data.damage_relations[i].type)
-  //   for(resist of data.damage_relations[i].resists){
-  //     console.log("RESISTS",resist)
-  //     let curr_value = parseInt($(`.${resist}#resists`).text())
-  //     $(`.${resist}#resists`).html(`${curr_value + 1}`)
-      
-  //   }
-  //   for(immunity of data.damage_relations[i].immune_to){
-  //     console.log("IMMUNE TO",immunity)
-  //     let curr_value = parseInt($(`.${immunity}#immune_to`).text())
-  //     $(`.${immunity}#immune_to`).html(`${curr_value + 1}`)
-  //   }
-  //   for(weakness of data.damage_relations[i].weak_against){
-  //     console.log("WEAK AGAINST", weakness)
-  //     let curr_value = parseInt($(`.${weakness}#weak_against`).text())
-  //     $(`.${weakness}#weak_against`).html(`${curr_value + 1}`)
-  //   }
-  // }
+  
 }
 
 function calculateDualTypeDamageRelations(data){
@@ -175,7 +156,6 @@ function displayDamageRelations(resp){
   console.log("ORIGINAL RESPONSE",resp)
   console.log("RESP.DATA", resp.data)
   for(data of resp.data){
-    console.log("THIS IS THE DATA", data)
     if(data.damage_relations.length > 1) {
      calculateDualTypeDamageRelations(data.damage_relations)
     }
@@ -252,7 +232,12 @@ async function saveTeam(evt) {
   }
 }
 
-$(document).ready(loadLocalStorage);
+$(document).ready(function(){
+  if(window.location.pathname == "/team_builder"){
+    loadLocalStorage()
+    }
+  });
+  
 $(document).ready(function(){
   if ($("#team-list").text().length > 0){
     $("#save-team").show()

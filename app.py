@@ -120,10 +120,17 @@ def display_team(team_id):
         flash("Please sign into your account to view your team")
         return redirect("/")
     team = Team.query.get_or_404(team_id)
+    # allows us to display each pokemon's sprite
     team_data = []
     for id in team.pokemon_ids:
         team_data.append(getPokemonData(id))
-    return render_template("team_details.html", team_data=team_data, team=team)
+    # obtains damage relations for each pokemon on the team
+    data = {"data": []}
+    for pokemon in team_data:
+        relations = getDamageRelations(pokemon["types"])
+        data["data"].append(relations)
+    print("*************************************", data)
+    return render_template("team_details.html", team_data=team_data, team=team, data=data)
 
 
 @app.route("/profile/<int:team_id>/delete", methods=["GET", "DELETE"])
