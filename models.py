@@ -24,7 +24,7 @@ class User(db.Model):
     teams = db.relationship("Team", backref="user")
 
     def __repr__(self):
-        return f"<User #{self.id}: {self.username}"
+        return f"<User #{self.id}: {self.username}>"
 
     @classmethod
     def register(cls, username, password):

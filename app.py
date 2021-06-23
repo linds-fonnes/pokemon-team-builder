@@ -55,7 +55,7 @@ def home_page():
         return redirect("/team_builder")
     return render_template("home.html")
 
-
+ 
 @app.route("/register", methods=["GET", "POST"])
 def register():
     """Registers a new user: allowing user to have ability to save teams"""
@@ -109,7 +109,6 @@ def display_user_profile():
         flash("Please sign into your account to view your profile")
         return redirect("/")
     user = g.user
-    print(user.teams)
     return render_template("profile.html", teams=user.teams)
 
 
