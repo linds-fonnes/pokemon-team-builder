@@ -1,14 +1,24 @@
-{% extends 'base.html' %} {% block title %} Register New User {% endblock %} {%
-block content %}
-<h1>Register User</h1>
-{% for msg in get_flashed_messages() %}
-<p>{{ msg }}</p>
-{% endfor %}
-<form method="POST">
+{% extends 'base.html' %} {% block title %} Register {% endblock %} {% block
+content %}
+<h1 class="title is-1 has-text-centered pt-2">Register</h1>
+<div class="section">
+  {% for msg in get_flashed_messages() %}
+  <p class="has-text-dark">
+    <i class="fas fa-exclamation-circle"></i> {{ msg }}
+  </p>
+  {% endfor %}
+</div>
+
+<form method="POST" class="box px-5 mx-6">
   {{ form.hidden_tag() }} {% for field in form if field.widget.input_type !=
-  'hidden' %} {% for error in field.errors %}
-  <span>{{error}}</span>
-  {% endfor %} {{ field(placeholder=field.label.text)}} {% endfor %}
-  <button>Register</button>
+  'hidden' %}
+  <div class="field" style="height: 15vh">
+    {% for error in field.errors %}
+    <span>{{error}}</span>
+    {% endfor %}<label class="label is-size-5">{{field.label}}</label> {{
+    field(class_="is-size-5", placeholder=field.description)}}
+  </div>
+  {% endfor %}
+  <button class="button is-link is-medium">Login</button>
 </form>
 {% endblock %}

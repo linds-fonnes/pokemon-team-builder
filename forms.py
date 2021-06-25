@@ -8,6 +8,6 @@ class UserForm(FlaskForm):
     """Form to register a new user"""
 
     username = StringField("Username", validators=[DataRequired(), Length(
-        min=6, message="Username must be at least 6 characters")])
+        min=6, message="Username must be at least 6 characters")], description="e.g. ketchum97")
     password = PasswordField("Password", validators=[DataRequired(), Length(
-        min=8, message="Password must be at least 8 characters")])
+        min=8, message="Password must be at least 8 characters")], description="********")
