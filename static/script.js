@@ -9,7 +9,7 @@ function loadLocalStorage() {
         .append(
           `<img class="pokemon-sprite" id="${storageArray[i].id}" src="${storageArray[i].sprite}"/>`
         )
-        .append(`<button class="remove-pokemon">X</button>`);
+        .append(`<button class="button is-small is-rounded is-ghost remove-pokemon"><i class="fas fa-minus-circle"></i></button>`);
     }
     getDamageRelations()
   }
@@ -47,6 +47,7 @@ function hideLoader() {
 }
 
 function displayPokemonCard(resp) {
+  $(".modal").addClass("is-active")
   $("#pokemon-stats").empty();
   $("#pokemon-card").show();
   $("#search-term").val("");
@@ -81,7 +82,6 @@ async function processPokemonSearch(evt) {
       .post("/team_builder/search_pokemon", { name: name })
       .then((response) => {
         pokemon_data = response.data;
-        console.log(pokemon_data);
         $("#search-error").hide();
         displayPokemonCard(response.data);
         hideLoader();
@@ -93,19 +93,15 @@ async function processPokemonSearch(evt) {
 }
 
 function displayDualTypeDamageRelations(type){
-  console.log(type)
   for(immunity of type.immune_to){
-    console.log("IMMUNE TO", immunity)
     let curr_value = parseInt($(`.${immunity}#immune_to`).text())
     $(`.${immunity}#immune_to`).html(`${curr_value + 1}`)
   }
   for(resist of type.resists){
-    console.log("RESISTS", resist)
     let curr_value = parseInt($(`.${resist}#resists`).text())
     $(`.${resist}#resists`).html(`${curr_value + 1}`)
   }
   for(weakness of type.weak_against){
-    console.log("WEAK AGAINST", weakness)
     let curr_value = parseInt($(`.${weakness}#weak_against`).text())
     $(`.${weakness}#weak_against`).html(`${curr_value + 1}`)
   }
@@ -113,7 +109,6 @@ function displayDualTypeDamageRelations(type){
 }
 
 function calculateDualTypeDamageRelations(data){
-  console.log("THERES TWO TYPES", data)
   let temp_weak_arr = []
   let temp_resist_arr = []
   let immune_arr = []
@@ -153,29 +148,22 @@ function calculateDualTypeDamageRelations(data){
 
 function displayDamageRelations(resp){
   $(".stat").html("0")
-  console.log("ORIGINAL RESPONSE",resp)
-  console.log("RESP.DATA", resp.data)
   for(data of resp.data){
     if(data.damage_relations.length > 1) {
      calculateDualTypeDamageRelations(data.damage_relations)
     }
     else{
       for(let i = 0; i < data.damage_relations.length; i++){
-        console.log(data.damage_relations[i])
-        console.log(data.damage_relations[i].type)
         for(resist of data.damage_relations[i].resists){
-          console.log("RESISTS",resist)
           let curr_value = parseInt($(`.${resist}#resists`).text())
           $(`.${resist}#resists`).html(`${curr_value + 1}`)
           
         }
         for(immunity of data.damage_relations[i].immune_to){
-          console.log("IMMUNE TO",immunity)
           let curr_value = parseInt($(`.${immunity}#immune_to`).text())
           $(`.${immunity}#immune_to`).html(`${curr_value + 1}`)
         }
         for(weakness of data.damage_relations[i].weak_against){
-          console.log("WEAK AGAINST", weakness)
           let curr_value = parseInt($(`.${weakness}#weak_against`).text())
           $(`.${weakness}#weak_against`).html(`${curr_value + 1}`)
         }
@@ -194,12 +182,13 @@ async function getDamageRelations() {
 
 
 function displayAddedPokemon() {
+  $(".modal").removeClass("is-active")
   if (counter < 6) {
     let new_pokemon = $("#team-list")
       .append(
         `<img class="pokemon-sprite" id="${pokemon_data.id}" src="${pokemon_data.sprite}"/>`
       )
-      .append(`<button class="remove-pokemon">X</button>`);
+      .append(`<button class="button is-small is-rounded is-ghost remove-pokemon"><i class="fas fa-minus-circle"></i></button>`);
     counter++;
     addToLocalStorage(pokemon_data);
     getDamageRelations();
@@ -226,9 +215,9 @@ async function saveTeam(evt) {
       data: storageArray,
       team_name: $("#team-name").val(),
     });
-    $("#save-team-message").text(response.data.message);
+    $("#save-team-message").text(response.data.message).prepend(' <i class="fas fa-exclamation-circle"></i> ');
   } catch (error) {
-    $("#save-team-message").text(error.response.data.message);
+    $("#save-team-message").text(error.response.data.message).prepend(' <i class="fas fa-exclamation-circle"></i> ');
   }
 }
 
@@ -247,3 +236,10 @@ $("#search-form").on("submit", processPokemonSearch);
 $("#add-btn").on("click", displayAddedPokemon);
 $("#team-list").on("click", ".remove-pokemon", removePokemon);
 $("#save-team").on("submit", saveTeam);
+$("#nav-burger").on("click",() =>{
+  $("#nav-links").toggleClass("is-active")
+})
+$(".modal-background").on("click", () => {
+  $(".modal").removeClass("is-active")
+})
+

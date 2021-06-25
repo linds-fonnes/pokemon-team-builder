@@ -19,6 +19,7 @@ app.config['SECRET_KEY'] = secret_key
 app.config['DEBUG_TB_INTERCEPT_REDIRECTS'] = False
 
 debug = DebugToolbarExtension(app)
+
 connect_db(app)
 db.create_all()
 
@@ -55,7 +56,7 @@ def home_page():
         return redirect("/team_builder")
     return render_template("home.html")
 
- 
+
 @app.route("/register", methods=["GET", "POST"])
 def register():
     """Registers a new user: allowing user to have ability to save teams"""

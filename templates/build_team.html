@@ -1,52 +1,80 @@
 {% extends 'base.html' %} {% block title %} Build Your Pokemon Team {% endblock
 %} {% block content %}
-<h1>Build Your Pokemon Team</h1>
-{% if g.user %}
-<a href="/logout">Logout</a>
-<a href="/profile">Profile</a>
-{% endif %}
-<form id="search-form" >
-<input type="text" placeholder="Search pokemon by name" id="search-term"></input>
-<button>
-<i class="fa fa-search"></i>
+<nav class="navbar has-shadow is-white">
+  <div class="navbar-brand">
+    <a href="/" class="navbar-item"><img
+      src="https://fontmeme.com/permalink/210624/2c289d1aecfbda9aec6a14c7069faf01.png"
+      alt="pokemon-font" style="max-height: 70px" class="py-2 px-2"
+      border="0"
+    /> </a>
+    {% if g.user %}
+    <a class="navbar-burger" id="nav-burger">
+      <span></span>
+      <span></span>
+      <span></span>
+    </a> 
+    {% endif %}
+  </div>
+  {% if g.user %}
+  <div class="navbar-menu" id="nav-links">
+    <div class="navbar-end pr-2">
+      <a href="/profile" class="navbar-item is-size-5">My Saved Teams</a>
+      <a href="/logout" class="navbar-item is-size-5">Logout</a>
+    </div> 
+  </div>
+  {% endif %}
+</nav>
+<h1 class="title is-1 has-text-centered pt-3">Build Your Team</h1>
+<form id="search-form" class="px-5 mx-6">
+<div class="container has-text-centered py-2">
+<input type="text" placeholder="Search pokemon by name" id="search-term" class="is-size-4"></input>
+<button class="button">
+<i class="fa fa-search is-size-4"></i>
 </button>
+</div>
 </form>
 
 <div id="loader" class="o-pokeball c-loader u-tada hidden"></div>
+<div id="search-error" class="hidden has-text-centered is-size-5"> <i class="fas fa-exclamation-circle"></i> Sorry, we don't know that Pokemon</div>
 
-<div id="search-error" class="hidden">Sorry we don't know that Pokemon!</div>
-
-<div id="pokemon-card">
-  <p id="pokemon-name"></p>
-  <span id="pokemon-type"></span>
-  <img id="pokemon-img" />
-  <div id="pokemon-stats"></div>
-  <button id="add-btn" class="hidden">Add to Team</button>
+<div class="modal">
+  <div class="modal-background"></div>
+  <div class="modal-content has-background-white py-5 px-5 has-text-centered">
+  <div id="pokemon-card">
+    <p id="pokemon-name"></p>
+    <span id="pokemon-type"></span>
+    <img id="pokemon-img" />
+    <div id="pokemon-stats"></div>
+    <button id="add-btn" class="hidden button mt-2 is-link is-light">Add to Team</button>
+  </div>
+</div>
 </div>
 
-<div id="team-error" class="hidden">Team is full! Please delete a Pokemon to add another</div>
+<div class="box mx-6 my-3">
+<div id="team-error" class="hidden has-text-centered is-size-5"><i class="fas fa-exclamation-circle"></i> Team is full! Please delete a Pokemon to add another</div>
 
-<div id="team-list"></div>
+<div id="team-list" class="has-text-centered my-4"></div>
 
 {% if g.user %}
-
+<div class="is-size-5">
 <p id="save-team-message"></p>
-<div id="save-team" class="hidden">
-  <form>
-    <input type="text" id="team-name" placeholder="Name your team">
-    <button type="submit">Save</button>
+</div>
+<div id="save-team" class="hidden ml-6">
+  <form class="control">
+    <input type="text" id="team-name" placeholder="Name your team" class="is-size-5">
+    <button type="submit" class="button is-small is-link is-light">Save</button>
   </form>
 </div>
 {% else %}
-<p><a href="/login">Login</a> or <a href="/register">Register</a> to save your team</p>
+<p class="ml-6"><a href="/login">Login</a> or <a href="/register">Register</a> to save your team</p>
 {% endif %}
-<table>
+<table class="is-size-5 ml-5 has-text-centered">
   <thead>
     <tr>
-      <th>Types</th>
-      <th>Weakness</th>
-      <th>Resist</th>
-      <th>Immune</th>
+      <th class="px-5">Types</th>
+      <th class="px-5">Weakness</th>
+      <th class="px-5">Resist</th>
+      <th class="px-5">Immune</th>
     </tr>
   </thead>
   <tbody>
@@ -160,4 +188,5 @@
     </tr>
   </tbody>
   </table>
+</div>
 {% endblock %}

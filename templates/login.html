@@ -1,6 +1,6 @@
 {% extends 'base.html' %} {% block title %} Login {% endblock %} {% block
 content %}
-<h1 class="title is-1 has-text-centered pt-2">Login</h1>
+
 <div class="section">
   {% for msg in get_flashed_messages() %}
   <p class="has-text-dark">
@@ -10,9 +10,10 @@ content %}
 </div>
 
 <form method="POST" class="box px-5 mx-6">
+  <h1 class="title is-1 has-text-centered pt-2">Login</h1>
   {{ form.hidden_tag() }} {% for field in form if field.widget.input_type !=
   'hidden' %}
-  <div class="field" style="height: 15vh">
+  <div class="field" style="height: 12vh">
     {% for error in field.errors %}
     <span>{{error}}</span>
     {% endfor %}<label class="label is-size-5">{{field.label}}</label> {{

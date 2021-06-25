@@ -4,12 +4,24 @@
 
 body {
   background-color: #cc0000d5;
-  height: 100vh;
+  min-height: 100vh;
+  min-width: -webkit-fit-content;
+  min-width: -moz-fit-content;
+  min-width: fit-content;
 }
 
 .u-tada {
   -webkit-animation: tada 1200ms infinite;
           animation: tada 1200ms infinite;
+}
+
+.trainer-img {
+  padding-left: 12rem;
+}
+
+#pokemon-img {
+  height: 169px;
+  width: 135px;
 }
 
 /* Pokeball draw code credited to user DD on CodePen https://codepen.io/dd-monsoon/pen/KgpXpk?editors=1100*/
