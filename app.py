@@ -3,8 +3,6 @@ import os
 from flask import Flask, request, redirect, render_template, flash, redirect, session, g, jsonify
 from flask_debugtoolbar import DebugToolbarExtension
 from sqlalchemy.exc import IntegrityError
-from decouple import config
-from secret import secret_key
 from models import db, connect_db, User, Team
 from forms import UserForm
 from helpers import getPokemonData, getDamageRelations
