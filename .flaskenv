@@ -1,3 +1,2 @@
 FLASK_APP=app.py
 FLASK_ENV=development 
-KEY=hfy92kadHgkk29fahjsu3j922v9sjwaucahf
