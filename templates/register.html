@@ -9,19 +9,21 @@ content %}
   {% endfor %}
 </div>
 
-<div class="form-container">
-  <form method="POST" class="box px-5 mx-6 form">
-    <h1 class="title is-1 has-text-centered pt-2">Register</h1>
-    {{ form.hidden_tag() }} {% for field in form if field.widget.input_type !=
-    'hidden' %}
-    <div class="field" style="height: 12vh">
-      {% for error in field.errors %}
-      <span>{{error}}</span>
-      {% endfor %}<label class="label is-size-5">{{field.label}}</label> {{
-      field(class_="is-size-5", placeholder=field.description)}}
-    </div>
-    {% endfor %}
-    <button class="button is-link is-medium">Login</button>
-  </form>
-</div>
+<section class="section">
+  <div class="form-container">
+    <form method="POST" class="box px-5 mx-6 form">
+      <h1 class="title is-1 has-text-centered pt-2">Register</h1>
+      {{ form.hidden_tag() }} {% for field in form if field.widget.input_type !=
+      'hidden' %}
+      <div class="field" style="height: 12vh">
+        {% for error in field.errors %}
+        <span>{{error}}</span>
+        {% endfor %}<label class="label is-size-5">{{field.label}}</label> {{
+        field(class_="is-size-5", placeholder=field.description)}}
+      </div>
+      {% endfor %}
+      <button class="button is-link is-medium">Login</button>
+    </form>
+  </div>
+</section>
 {% endblock %}

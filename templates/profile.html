@@ -1,8 +1,50 @@
 {% extends 'base.html' %} {% block title %} {{g.user.username}} Profile {%
 endblock %} {% block content %}
-<a href="/team_builder">Team Builder</a>
-<h1>{{g.user.username}}'s Teams</h1>
+<nav class="navbar has-shadow is-white">
+  <div class="navbar-brand">
+    <a href="/" class="navbar-item"
+      ><img
+        src="https://fontmeme.com/permalink/210624/2c289d1aecfbda9aec6a14c7069faf01.png"
+        alt="pokemon-font"
+        style="max-height: 70px"
+        class="py-2 px-2"
+        border="0"
+      />
+    </a>
+    <a class="navbar-burger" id="nav-burger">
+      <span></span>
+      <span></span>
+      <span></span>
+    </a>
+  </div>
+  <div class="navbar-menu" id="nav-links">
+    <div class="navbar-end pr-2">
+      <a href="/profile" class="navbar-item is-size-5">My Saved Teams</a>
+      <a href="/logout" class="navbar-item is-size-5">Logout</a>
+    </div>
+  </div>
+</nav>
 
-{% for team in teams %}
-<a href="/profile/{{team.id}}">{{team.name}}</a>
-{% endfor %} {% endblock %}
+<div>
+  {% for message in get_flashed_messages() %}
+  <div>{{message}}</div>
+  {% endfor %}
+</div>
+<section class="section">
+  <div class="container">
+    <div class="box mx-6 my-6 px-6">
+      <h1 class="title is-1 has-text-centered pt-3">
+        {{g.user.username}}'s Teams
+      </h1>
+      <ul class="column">
+        {% for team in teams %}
+        <li class="is-size-4 py-3">
+          <img src="/static/pokeball.jpeg" />
+          <a href="/profile/{{team.id}}">{{team.name}}</a>
+        </li>
+        {% endfor %}
+      </ul>
+    </div>
+  </div>
+</section>
+{% endblock %}

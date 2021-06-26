@@ -1,27 +1,31 @@
 {% extends 'base.html' %} {% block title %} Pokemon Team Builder {% endblock %}
 {% block content %}
-<h1 class="has-text-centered section">
-  <img
-    src="https://fontmeme.com/permalink/210624/2c289d1aecfbda9aec6a14c7069faf01.png"
-    alt="pokemon-font"
-    border="0"
-  />
-</h1>
-<div class="has-text-centered section">
-  <a href="/team_builder" class="button is-link is-light is-medium"
-    >Start Team Building</a
-  >
-</div>
-<div class="has-text-centered">
-  <a href="/register" class="is-size-5 mx-5 button is-ghost">Sign Up</a>
-  <a href="/login" class="is-size-5 mx-5 button is-ghost">Login</a>
-</div>
-<div class="trainer-img">
-  <img
-    class="pl-1"
-    src="http://pa1.narvii.com/7152/79f43c7ea0ebbd4c7d017d52fc8cca851958aee7r1-200-200_00.gif"
-    alt="gif of trainer with pokeball"
-  />
-</div>
+
+<section class="section">
+  <div class="container">
+    <h1 class="has-text-centered section">
+      <img
+        src="https://fontmeme.com/permalink/210624/2c289d1aecfbda9aec6a14c7069faf01.png"
+        alt="pokemon-font"
+        border="0"
+      />
+    </h1>
+    <div class="has-text-centered section">
+      <a href="/team_builder" class="button is-link is-light is-medium"
+        >Start Team Building</a
+      >
+    </div>
+    <div class="has-text-centered">
+      <a href="/register" class="is-size-5 mx-5 button is-ghost">Sign Up</a>
+      <a href="/login" class="is-size-5 mx-5 button is-ghost">Login</a>
+    </div>
+    <div class="trainer-img">
+      <img
+        src="http://pa1.narvii.com/7152/79f43c7ea0ebbd4c7d017d52fc8cca851958aee7r1-200-200_00.gif"
+        alt="gif of trainer with pokeball"
+      />
+    </div>
+  </div>
+</section>
 
 {% endblock %}

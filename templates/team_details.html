@@ -4,6 +4,14 @@
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <script
+      defer
+      src="https://use.fontawesome.com/releases/v5.3.1/js/all.js"
+    ></script>
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bulma@0.9.3/css/bulma.min.css"
+    />
     <link rel="stylesheet" href="/static/styles.css" />
     <link
       rel="stylesheet"
@@ -20,139 +28,166 @@
     <title>{{team.name}}</title>
   </head>
   <body>
-    <div>
-      {% for message in get_flashed_messages() %}
-      <div>{{message}}</div>
-      {% endfor %}
-    </div>
-    <a href="/profile">Profile</a>
-    <form method="DELETE" action="/profile/{{team.id}}/delete">
-      <button>Delete Team</button>
-    </form>
-    <h1>{{team.name}}</h1>
-    {% for pokemon in team_data %}
-    <img src="{{pokemon.sprite}}" />
-    {% endfor %}
-    <table>
-      <thead>
-        <tr>
-          <th>Types</th>
-          <th>Weakness</th>
-          <th>Resist</th>
-          <th>Immune</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr>
-          <td class="fire">Fire</td>
-          <td class="fire" id="weak_against">0</td>
-          <td class="fire" id="resists">0</td>
-          <td class="fire" id="immune_to">0</td>
-        </tr>
-        <tr>
-          <td class="water">Water</td>
-          <td class="water" id="weak_against">0</td>
-          <td class="water" id="resists">0</td>
-          <td class="water" id="immune_to">0</td>
-        </tr>
-        <tr>
-          <td class="grass">Grass</td>
-          <td class="grass" id="weak_against">0</td>
-          <td class="grass" id="resists">0</td>
-          <td class="grass" id="immune_to">0</td>
-        </tr>
-        <tr>
-          <td class="electric">Electric</td>
-          <td class="electric" id="weak_against">0</td>
-          <td class="electric" id="resists">0</td>
-          <td class="electric" id="immune_to">0</td>
-        </tr>
-        <tr>
-          <td class="ice">Ice</td>
-          <td class="ice" id="weak_against">0</td>
-          <td class="ice" id="resists">0</td>
-          <td class="ice" id="immune_to">0</td>
-        </tr>
-        <tr>
-          <td class="fighting">Fighting</td>
-          <td class="fighting" id="weak_against">0</td>
-          <td class="fighting" id="resists">0</td>
-          <td class="fighting" id="immune_to">0</td>
-        </tr>
-        <tr>
-          <td class="poison">Poison</td>
-          <td class="poison" id="weak_against">0</td>
-          <td class="poison" id="resists">0</td>
-          <td class="poison" id="immune_to">0</td>
-        </tr>
-        <tr>
-          <td class="ground">Ground</td>
-          <td class="ground" id="weak_against">0</td>
-          <td class="ground" id="resists">0</td>
-          <td class="ground" id="immune_to">0</td>
-        </tr>
-        <tr>
-          <td class="flying">Flying</td>
-          <td class="flying" id="weak_against">0</td>
-          <td class="flying" id="resists">0</td>
-          <td class="flying" id="immune_to">0</td>
-        </tr>
-        <tr>
-          <td class="psychic">Psychic</td>
-          <td class="psychic" id="weak_against">0</td>
-          <td class="psychic" id="resists">0</td>
-          <td class="psychic" id="immune_to">0</td>
-        </tr>
-        <tr>
-          <td class="bug">Bug</td>
-          <td class="bug" id="weak_against">0</td>
-          <td class="bug" id="resists">0</td>
-          <td class="bug" id="immune_to">0</td>
-        </tr>
-        <tr>
-          <td class="rock">Rock</td>
-          <td class="rock" id="weak_against">0</td>
-          <td class="rock" id="resists">0</td>
-          <td class="rock" id="immune_to">0</td>
-        </tr>
-        <tr>
-          <td class="ghost">Ghost</td>
-          <td class="ghost" id="weak_against">0</td>
-          <td class="ghost" id="resists">0</td>
-          <td class="ghost" id="immune_to">0</td>
-        </tr>
-        <tr>
-          <td class="dark">Dark</td>
-          <td class="dark" id="weak_against">0</td>
-          <td class="dark" id="resists">0</td>
-          <td class="dark" id="immune_to">0</td>
-        </tr>
-        <tr>
-          <td class="normal">Normal</td>
-          <td class="normal" id="weak_against">0</td>
-          <td class="normal" id="resists">0</td>
-          <td class="normal" id="immune_to">0</td>
-        </tr>
-        <tr>
-          <td class="steel">Steel</td>
-          <td class="steel" id="weak_against">0</td>
-          <td class="steel" id="resists">0</td>
-          <td class="steel" id="immune_to">0</td>
-        </tr>
-        <tr>
-          <td class="dragon">Dragon</td>
-          <td class="dragon" id="weak_against">0</td>
-          <td class="dragon" id="resists">0</td>
-          <td class="dragon" id="immune_to">0</td>
-        </tr>
-        <tr>
-          <td class="fairy">Fairy</td>
-          <td class="fairy" id="weak_against">0</td>
-          <td class="fairy" id="resists">0</td>
-          <td class="fairy" id="immune_to">0</td>
-        </tr>
-      </tbody>
-    </table>
+    <nav class="navbar has-shadow is-white">
+      <div class="navbar-brand">
+        <a href="/" class="navbar-item"
+          ><img
+            src="https://fontmeme.com/permalink/210624/2c289d1aecfbda9aec6a14c7069faf01.png"
+            alt="pokemon-font"
+            style="max-height: 70px"
+            class="py-2 px-2"
+            border="0"
+          />
+        </a>
+        <a class="navbar-burger" id="nav-burger">
+          <span></span>
+          <span></span>
+          <span></span>
+        </a>
+      </div>
+      <div class="navbar-menu" id="nav-links">
+        <div class="navbar-end pr-2">
+          <a href="/profile" class="navbar-item is-size-5">My Saved Teams</a>
+          <a href="/logout" class="navbar-item is-size-5">Logout</a>
+        </div>
+      </div>
+    </nav>
+    <section class="section">
+      <div class="box mx-6 my-3">
+        <form method="DELETE" action="/profile/{{team.id}}/delete">
+          <button class="button mt-2 is-danger is-light is-pulled-right">
+            <i class="fas fa-trash-alt is-danger"></i>
+          </button>
+        </form>
+        <h1 class="title is-1 has-text-centered pt-3">{{team.name}}</h1>
+        <div class="has-text-centered my-4">
+          {% for pokemon in team_data %}
+          <img src="{{pokemon.sprite}}" />
+          {% endfor %}
+        </div>
+
+        <table class="is-size-5 ml-5 has-text-centered">
+          <thead>
+            <tr>
+              <th class="px-5">Types</th>
+              <th class="px-5">Weakness</th>
+              <th class="px-5">Resist</th>
+              <th class="px-5">Immune</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td class="type fire has-text-light">Fire</td>
+              <td class="fire" id="weak_against">0</td>
+              <td class="fire" id="resists">0</td>
+              <td class="fire" id="immune_to">0</td>
+            </tr>
+            <tr>
+              <td class="type water has-text-light">Water</td>
+              <td class="water" id="weak_against">0</td>
+              <td class="water" id="resists">0</td>
+              <td class="water" id="immune_to">0</td>
+            </tr>
+            <tr>
+              <td class="type grass has-text-light">Grass</td>
+              <td class="grass" id="weak_against">0</td>
+              <td class="grass" id="resists">0</td>
+              <td class="grass" id="immune_to">0</td>
+            </tr>
+            <tr>
+              <td class="type electric has-text-light">Electric</td>
+              <td class="electric" id="weak_against">0</td>
+              <td class="electric" id="resists">0</td>
+              <td class="electric" id="immune_to">0</td>
+            </tr>
+            <tr>
+              <td class="type ice has-text-light">Ice</td>
+              <td class="ice" id="weak_against">0</td>
+              <td class="ice" id="resists">0</td>
+              <td class="ice" id="immune_to">0</td>
+            </tr>
+            <tr>
+              <td class="type fighting has-text-light">Fighting</td>
+              <td class="fighting" id="weak_against">0</td>
+              <td class="fighting" id="resists">0</td>
+              <td class="fighting" id="immune_to">0</td>
+            </tr>
+            <tr>
+              <td class="type poison has-text-light">Poison</td>
+              <td class="poison" id="weak_against">0</td>
+              <td class="poison" id="resists">0</td>
+              <td class="poison" id="immune_to">0</td>
+            </tr>
+            <tr>
+              <td class="type ground has-text-light">Ground</td>
+              <td class="ground" id="weak_against">0</td>
+              <td class="ground" id="resists">0</td>
+              <td class="ground" id="immune_to">0</td>
+            </tr>
+            <tr>
+              <td class="type flying has-text-light">Flying</td>
+              <td class="flying" id="weak_against">0</td>
+              <td class="flying" id="resists">0</td>
+              <td class="flying" id="immune_to">0</td>
+            </tr>
+            <tr>
+              <td class="type psychic has-text-light">Psychic</td>
+              <td class="psychic" id="weak_against">0</td>
+              <td class="psychic" id="resists">0</td>
+              <td class="psychic" id="immune_to">0</td>
+            </tr>
+            <tr>
+              <td class="type bug has-text-light">Bug</td>
+              <td class="bug" id="weak_against">0</td>
+              <td class="bug" id="resists">0</td>
+              <td class="bug" id="immune_to">0</td>
+            </tr>
+            <tr>
+              <td class="type rock has-text-light">Rock</td>
+              <td class="rock" id="weak_against">0</td>
+              <td class="rock" id="resists">0</td>
+              <td class="rock" id="immune_to">0</td>
+            </tr>
+            <tr>
+              <td class="type ghost has-text-light">Ghost</td>
+              <td class="ghost" id="weak_against">0</td>
+              <td class="ghost" id="resists">0</td>
+              <td class="ghost" id="immune_to">0</td>
+            </tr>
+            <tr>
+              <td class="type dark has-text-light">Dark</td>
+              <td class="dark" id="weak_against">0</td>
+              <td class="dark" id="resists">0</td>
+              <td class="dark" id="immune_to">0</td>
+            </tr>
+            <tr>
+              <td class="type normal has-text-light">Normal</td>
+              <td class="normal" id="weak_against">0</td>
+              <td class="normal" id="resists">0</td>
+              <td class="normal" id="immune_to">0</td>
+            </tr>
+            <tr>
+              <td class="type steel has-text-light">Steel</td>
+              <td class="steel" id="weak_against">0</td>
+              <td class="steel" id="resists">0</td>
+              <td class="steel" id="immune_to">0</td>
+            </tr>
+            <tr>
+              <td class="type dragon has-text-light">Dragon</td>
+              <td class="dragon" id="weak_against">0</td>
+              <td class="dragon" id="resists">0</td>
+              <td class="dragon" id="immune_to">0</td>
+            </tr>
+            <tr>
+              <td class="type fairy has-text-light">Fairy</td>
+              <td class="fairy" id="weak_against">0</td>
+              <td class="fairy" id="resists">0</td>
+              <td class="fairy" id="immune_to">0</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
     <script src="/static/script.js"></script>

@@ -50,6 +50,7 @@
 </div>
 </div>
 
+<section class="section">
 <div class="box mx-6 my-3">
 <div id="team-error" class="hidden has-text-centered is-size-5"><i class="fas fa-exclamation-circle"></i> Team is full! Please delete a Pokemon to add another</div>
 
@@ -57,7 +58,7 @@
 
 {% if g.user %}
 <div class="is-size-5">
-<p id="save-team-message"></p>
+<p id="save-team-message" class="ml-6"></p>
 </div>
 <div id="save-team" class="hidden ml-6">
   <form class="control">
@@ -79,109 +80,109 @@
   </thead>
   <tbody>
     <tr>
-      <td class="fire">Fire</td>
+      <td class=" type fire has-text-light">Fire</td>
       <td class="stat fire" id="weak_against">0</td>
       <td class="stat fire" id="resists">0</td>
       <td class="stat fire" id="immune_to">0</td>
     </tr>
     <tr>
-      <td class="water">Water</td>
+      <td class=" type water has-text-light">Water</td>
       <td class="stat water" id="weak_against">0</td>
       <td class="stat water" id="resists">0</td>
       <td class="stat water" id="immune_to">0</td>
     </tr>
     <tr>
-      <td class="grass">Grass</td>
+      <td class="type grass has-text-light">Grass</td>
       <td class="stat grass" id="weak_against">0</td>
       <td class="stat grass" id="resists">0</td>
       <td class="stat grass" id="immune_to">0</td>
     </tr>
     <tr>
-      <td class="electric">Electric</td>
+      <td class="type electric has-text-light">Electric</td>
       <td class="stat electric" id="weak_against">0</td>
       <td class="stat electric" id="resists">0</td>
       <td class="stat electric" id="immune_to">0</td>
     </tr>
     <tr>
-      <td class="ice">Ice</td>
+      <td class="type ice has-text-light">Ice</td>
       <td class="stat ice" id="weak_against">0</td>
       <td class="stat ice" id="resists">0</td>
       <td class="stat ice" id="immune_to">0</td>
     </tr>
     <tr>
-      <td class="fighting">Fighting</td>
+      <td class="type fighting has-text-light">Fighting</td>
       <td class="stat fighting" id="weak_against">0</td>
       <td class="stat fighting" id="resists">0</td>
       <td class="stat fighting" id="immune_to">0</td>
     </tr>
     <tr>
-      <td class="poison">Poison</td>
+      <td class="type poison has-text-light">Poison</td>
       <td class="stat poison" id="weak_against">0</td>
       <td class="stat poison" id="resists">0</td>
       <td class="stat poison" id="immune_to">0</td>
     </tr>
     <tr>
-      <td class="ground">Ground</td>
+      <td class="type ground has-text-light">Ground</td>
       <td class="stat ground" id="weak_against">0</td>
       <td class="stat ground" id="resists">0</td>
       <td class="stat ground" id="immune_to">0</td>
     </tr>
     <tr>
-      <td class="flying">Flying</td>
+      <td class="type flying has-text-light">Flying</td>
       <td class="stat flying" id="weak_against">0</td>
       <td class="stat flying" id="resists">0</td>
       <td class="stat flying" id="immune_to">0</td>
     </tr>
     <tr>
-      <td class="psychic">Psychic</td>
+      <td class="type psychic has-text-light">Psychic</td>
       <td class="stat psychic" id="weak_against">0</td>
       <td class="stat psychic" id="resists">0</td>
       <td class="stat psychic" id="immune_to">0</td>
     </tr>
     <tr>
-      <td class="bug">Bug</td>
+      <td class="type bug has-text-light">Bug</td>
       <td class="stat bug" id="weak_against">0</td>
       <td class="stat bug" id="resists">0</td>
       <td class="stat bug" id="immune_to">0</td>
     </tr>
     <tr>
-      <td class="rock">Rock</td>
+      <td class="type rock has-text-light">Rock</td>
       <td class="stat rock" id="weak_against">0</td>
       <td class="stat rock" id="resists">0</td>
       <td class="stat rock" id="immune_to">0</td>
     </tr>
     <tr>
-      <td class="ghost">Ghost</td>
+      <td class="type ghost has-text-light">Ghost</td>
       <td class="stat ghost" id="weak_against">0</td>
       <td class="stat ghost" id="resists">0</td>
       <td class="stat ghost" id="immune_to">0</td>
     </tr>
     <tr>
-      <td class="dark">Dark</td>
+      <td class="type dark has-text-light">Dark</td>
       <td class="stat dark" id="weak_against">0</td>
       <td class="stat dark" id="resists">0</td>
       <td class="stat dark" id="immune_to">0</td>
     </tr>
     <tr>
-      <td class="normal">Normal</td>
+      <td class="type normal has-text-light">Normal</td>
       <td class="stat normal" id="weak_against">0</td>
       <td class="stat normal" id="resists">0</td>
       <td class="stat normal" id="immune_to">0</td>
     </tr>
     <tr>
-      <td class="steel">Steel</td>
+      <td class="type steel has-text-light">Steel</td>
       <td class="stat steel" id="weak_against">0</td>
       <td class="stat steel" id="resists">0</td>
       <td class="stat steel" id="immune_to">0</td>
     </tr>
     <tr>
-      <td class="dragon">Dragon</td>
+      <td class="type dragon has-text-light">Dragon</td>
       <td class="stat dragon" id="weak_against">0</td>
       <td class="stat dragon" id="resists">0</td>
       <td class="stat dragon" id="immune_to">0</td>
     </tr>
     <tr>
-      <td class="fairy">Fairy</td>
+      <td class="type fairy has-text-light">Fairy</td>
       <td class="stat fairy" id="weak_against">0</td>
       <td class="stat fairy" id="resists">0</td>
       <td class="stat fairy" id="immune_to">0</td>
@@ -189,4 +190,5 @@
   </tbody>
   </table>
 </div>
+</section>
 {% endblock %}
