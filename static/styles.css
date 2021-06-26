@@ -143,6 +143,16 @@ table {
   bottom: 0;
 }
 
+@media only screen and (max-device-width: 400px) {
+  img.pokemon-font {
+    height: 70px;
+    width: 350px;
+  }
+  .start {
+    width: 180px;
+  }
+}
+
 /* Pokeball draw code credited to user DD on CodePen https://codepen.io/dd-monsoon/pen/KgpXpk?editors=1100*/
 .o-pokeball {
   width: 50px;

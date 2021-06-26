@@ -18,8 +18,6 @@ app.config['SQLALCHEMY_ECHO'] = True
 app.config['SECRET_KEY'] = secret_key
 app.config['DEBUG_TB_INTERCEPT_REDIRECTS'] = False
 
-debug = DebugToolbarExtension(app)
-
 connect_db(app)
 db.create_all()
 
@@ -35,7 +33,6 @@ def add_global_user():
 
     else:
         g.user = None
-        # print(session[CURR_USER_KEY])
 
 
 def login_user(user):
@@ -129,7 +126,7 @@ def display_team(team_id):
     for pokemon in team_data:
         relations = getDamageRelations(pokemon["types"])
         data["data"].append(relations)
-    print("*************************************", data)
+
     return render_template("team_details.html", team_data=team_data, team=team, data=data)
 
 
@@ -168,7 +165,6 @@ def get_damage_relations():
     for pokemon in team_data:
         relations = getDamageRelations(pokemon["types"])
         data["data"].append(relations)
-    print("*************************************", data)
     return make_response(jsonify(data), 200)
 
 
