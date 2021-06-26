@@ -3,7 +3,7 @@ import requests
 from flask import Flask, request, redirect, render_template, flash, redirect, session, g, jsonify
 from flask_debugtoolbar import DebugToolbarExtension
 from sqlalchemy.exc import IntegrityError
-from secret import secret_key
+from decouple import config
 from models import db, connect_db, User, Team
 from forms import UserForm
 from helpers import getPokemonData, getDamageRelations
@@ -15,7 +15,7 @@ app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql:///team_builder_db'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 app.config['SQLALCHEMY_ECHO'] = True
 
-app.config['SECRET_KEY'] = secret_key
+app.config['SECRET_KEY'] = config("KEY")
 app.config['DEBUG_TB_INTERCEPT_REDIRECTS'] = False
 
 connect_db(app)

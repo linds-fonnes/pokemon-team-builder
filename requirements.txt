@@ -23,6 +23,7 @@ MarkupSafe==2.0.1
 pokepy==0.6.2
 psycopg2-binary==2.8.6
 pycparser==2.20
+python-decouple==3.4
 python-dotenv==0.17.1
 requests==2.21.0
 six==1.10.0
