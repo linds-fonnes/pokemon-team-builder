@@ -238,10 +238,11 @@ async function saveTeam(evt) {
       team_name: $("#team-name").val(),
     });
     $("#save-team-message").text(response.data.message).prepend(' <i class="fas fa-exclamation-circle"></i> ');
+    $("#team-name").val("")
   } catch (error) {
     $("#save-team-message").text(error.response.data.message).prepend(' <i class="fas fa-exclamation-circle"></i> ');
   }
-  $("#team-name").val("")
+  
 }
 
 //event listeners
