@@ -183,6 +183,7 @@ async function getDamageRelations() {
 
 function displayAddedPokemon() {
   $(".modal").removeClass("is-active")
+  $("#save-team-message").empty()
   if (counter < 6) {
     let new_pokemon = $("#team-list")
       .append(
@@ -197,6 +198,7 @@ function displayAddedPokemon() {
 
 function removePokemon() {
   removeFromLocalStorage.call($(this).prev());
+  $("#save-team-message").empty()
   $("#team-error").hide();
   $(this).prev().remove();
   $(this).remove();
@@ -219,6 +221,7 @@ async function saveTeam(evt) {
   } catch (error) {
     $("#save-team-message").text(error.response.data.message).prepend(' <i class="fas fa-exclamation-circle"></i> ');
   }
+  $("#team-name").val("")
 }
 
 $(document).ready(function(){
