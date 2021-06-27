@@ -74,7 +74,7 @@ function displayTeamError() {
 let pokemon_data;
 async function processPokemonSearch(evt) {
   evt.preventDefault();
-  let name = $("#search-term").val();
+  let name = $("#search-term").val().toLowerCase();
 
   displayLoader();
   try {
