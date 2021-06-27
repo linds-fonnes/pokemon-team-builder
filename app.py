@@ -20,7 +20,6 @@ app.config['SECRET_KEY'] = os.environ.get(
 app.config['DEBUG_TB_INTERCEPT_REDIRECTS'] = False
 
 connect_db(app)
-# db.create_all()
 
 
 @app.before_request
@@ -29,8 +28,6 @@ def add_global_user():
 
     if CURR_USER_KEY in session:
         g.user = User.query.get(session[CURR_USER_KEY])
-        print(g.user)
-        print(session[CURR_USER_KEY])
 
     else:
         g.user = None
@@ -160,6 +157,7 @@ def search_pokemon():
 
 @app.route("/team_builder/damage_relations", methods=["POST"])
 def get_damage_relations():
+    """retrieves damage relations data for each pokemon on team"""
     team_data = request.json["data"]
 
     data = {"data": []}

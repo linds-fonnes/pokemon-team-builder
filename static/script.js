@@ -1,5 +1,7 @@
+//keeps count of how many pokemon have been added 
 let counter = 0;
 
+//retrieves data stored from local storage, if any displays the pokemon sprites 
 function loadLocalStorage() {
   let storageArray = JSON.parse(localStorage.getItem("team"));
   if (storageArray) {
@@ -15,6 +17,7 @@ function loadLocalStorage() {
   }
 }
 
+//adds pokemon data to local storage so that data persists on page reload and if user wants to register/login after building their team
 let team = [];
 function addToLocalStorage(data) {
   let new_pokemon = {};
@@ -26,6 +29,7 @@ function addToLocalStorage(data) {
   $("#save-team").show()
 }
 
+//resets local storage value to be all the pokemons minus the one that was clicked to be removed, reruns damage relations calculations
 function removeFromLocalStorage() {
   let storageArray = JSON.parse(localStorage.getItem("team"));
   const updatedArray = storageArray.filter(
@@ -35,6 +39,7 @@ function removeFromLocalStorage() {
   getDamageRelations()
 }
 
+//pokeball loader displays while ajax request searches api for pokemon data
 function displayLoader() {
   $("#loader").show();
   setTimeout(() => {
@@ -42,13 +47,15 @@ function displayLoader() {
   }, 5000);
 }
 
+//hide loader after response is received
 function hideLoader() {
   $("#loader").hide();
 }
 
+//displays modal of pokemon details
 function displayPokemonCard(resp) {
   $(".modal").addClass("is-active")
-  $("#pokemon-stats").empty();
+  $("#pokemon-stats").empty(); 
   $("#pokemon-card").show();
   $("#search-term").val("");
   $("#pokemon-name")
@@ -61,16 +68,18 @@ function displayPokemonCard(resp) {
   $("#add-btn").show();
 }
 
+//displays search error if pokemon name is not found in api
 function displaySearchError() {
   $("#search-error").show();
   hideLoader();
-  $("#pokemon-card").hide();
 }
 
+//displays error if user tries to add more than 6 pokemon on their team
 function displayTeamError() {
   $("#team-error").show();
 }
 
+//processes pokemon search and runs displayPokemonCard function with response data or displaySearchError if pokemon isn't found
 let pokemon_data;
 async function processPokemonSearch(evt) {
   evt.preventDefault();
@@ -92,6 +101,7 @@ async function processPokemonSearch(evt) {
   }
 }
 
+//displays damage relations totals to table for pokemon that have two types
 function displayDualTypeDamageRelations(type){
   for(immunity of type.immune_to){
     let curr_value = parseInt($(`.${immunity}#immune_to`).text())
@@ -108,6 +118,10 @@ function displayDualTypeDamageRelations(type){
   
 }
 
+//calculation for dual type pokemon's damage relations. when a single pokemon has two types, the resistances/weaknesses/immunities often overlap and it has to be calculated which ones will cancel each other out.
+// if there is overlap between weakness-resists they cancel each other out
+// if there is overlap between an immunity with a weakness/resist it only counts as an immunity
+// makes sure not to double count if there are two of the same resists/immunities/weaknesses - will only count for one of them
 function calculateDualTypeDamageRelations(data){
   let temp_weak_arr = []
   let temp_resist_arr = []
@@ -146,6 +160,7 @@ function calculateDualTypeDamageRelations(data){
   displayDualTypeDamageRelations(type)
 }
 
+//displays the damage relations for pokemon that are only single type
 function displayDamageRelations(resp){
   $(".stat").html("0")
   for(data of resp.data){
@@ -172,6 +187,7 @@ function displayDamageRelations(resp){
   }
 }
 
+//retrieves damage relations data for each pokemon added to the team so that it takes into account all of the pokemon on the team
 async function getDamageRelations() {
   let storageArray = JSON.parse(localStorage.getItem("team"));
   if (storageArray) {
@@ -181,6 +197,8 @@ async function getDamageRelations() {
   }
 
 
+//displays pokemon sprite after user adds to team, increases count, adds to local storage and runs damage relations
+//if team is full, displays error message
 function displayAddedPokemon() {
   $(".modal").removeClass("is-active")
   $("#save-team-message").empty()
@@ -196,6 +214,7 @@ function displayAddedPokemon() {
   } else $("#team-error").show();
 }
 
+//removes pokemon from local storage, decreases counter, and removes sprite from page
 function removePokemon() {
   removeFromLocalStorage.call($(this).prev());
   $("#save-team-message").empty()
@@ -208,6 +227,7 @@ function removePokemon() {
   }
 }
 
+//takes pokemon data from local storage, sends it to backend for the pokemon id's to be saved in database along with team name. displays success if saved or error if user didn't input a team name
 async function saveTeam(evt) {
   evt.preventDefault();
   let storageArray = JSON.parse(localStorage.getItem("team"));
@@ -224,6 +244,7 @@ async function saveTeam(evt) {
   $("#team-name").val("")
 }
 
+//event listeners
 $(document).ready(function(){
   if(window.location.pathname == "/team_builder"){
     loadLocalStorage()

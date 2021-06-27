@@ -2,6 +2,7 @@ import requests
 
 
 def getStats(req):
+    """retrieves pokemon's stat names & stat values"""
     stats = []
     for stat in req.json()["stats"]:
         stat_name = (stat["stat"]["name"])
@@ -12,6 +13,7 @@ def getStats(req):
 
 
 def getTypes(req):
+    """Retrieves type/types for pokemon"""
     types = []
     for type in req.json()["types"]:
         types.append(type["type"]["name"])
