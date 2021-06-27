@@ -20,7 +20,7 @@ app.config['SECRET_KEY'] = os.environ.get(
 app.config['DEBUG_TB_INTERCEPT_REDIRECTS'] = False
 
 connect_db(app)
-db.create_all()
+# db.create_all()
 
 
 @app.before_request
