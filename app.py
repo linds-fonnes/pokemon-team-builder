@@ -1,7 +1,6 @@
 from flask.helpers import make_response
 import os
 from flask import Flask, request, redirect, render_template, flash, redirect, session, g, jsonify
-from flask_debugtoolbar import DebugToolbarExtension
 from sqlalchemy.exc import IntegrityError
 from models import db, connect_db, User, Team
 from forms import UserForm
@@ -170,18 +169,20 @@ def get_damage_relations():
 @ app.route("/team_builder/save_team", methods=["POST"])
 def save_team():
     """Saves team to db associated with user"""
-    try:
-        team_data = request.json["data"]
-        team = []
-        for pokemon in team_data:
-            team.append(pokemon["id"])
-        name = request.json["team_name"]
-        new_team = Team(name=name, pokemon_ids=team, user_id=g.user.id)
-        db.session.add(new_team)
-        db.session.commit()
-        return make_response(jsonify({"message": "Team saved successfully"}), 200)
-    except:
-        return make_response(jsonify({"message": "Input is required"}), 400)
+    name = request.json["team_name"]
+    if name:
+        try:
+            team_data = request.json["data"]
+            team = []
+            for pokemon in team_data:
+                team.append(pokemon["id"])
+            new_team = Team(name=name, pokemon_ids=team, user_id=g.user.id)
+            db.session.add(new_team)
+            db.session.commit()
+            return make_response(jsonify({"message": "Team saved successfully"}), 200)
+        except:
+            return make_response(jsonify({"message": "Error, please try again"}), 400)
+    return make_response(jsonify({"message": "Input is required"}), 400)
 
 
 @ app.after_request
