@@ -1,5 +1,7 @@
 import requests
 
+URL = "https://pokeapi.co/api/v2"
+
 
 def getStats(req):
     """retrieves pokemon's stat names & stat values"""
@@ -22,7 +24,7 @@ def getTypes(req):
 
 def getPokemonData(name):
     """Retrieves data for searched Pokemon"""
-    request = requests.get(f"https://pokeapi.co/api/v2/pokemon/{name}")
+    request = requests.get(f"{URL}/pokemon/{name}")
     response = {
         "id": request.json()["id"],
         "name": request.json()["name"],
@@ -62,7 +64,7 @@ def getDamageRelations(types):
     """Retrieves damage relations for each type on team"""
     damage_relations = {"damage_relations": []}
     for type in types:
-        request = requests.get(f"https://pokeapi.co/api/v2/type/{type}/")
+        request = requests.get(f"{URL}/type/{type}/")
         response = {
             "type": type,
             "weak_against": getWeakness(request),
