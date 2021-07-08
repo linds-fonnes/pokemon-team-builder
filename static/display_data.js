@@ -1,11 +1,8 @@
-//keeps count of how many pokemon have been added 
-let counter = 0;
 
 //retrieves data stored from local storage, if any displays the pokemon sprites 
 function loadLocalStorage() {
   let storageArray = JSON.parse(localStorage.getItem("team"));
   if (storageArray) {
-    counter = storageArray.length;
     for (let i = 0; i < storageArray.length; i++) {
       let new_pokemon = $("#team-list")
         .append(
@@ -200,28 +197,27 @@ async function getDamageRelations() {
 //displays pokemon sprite after user adds to team, increases count, adds to local storage and runs damage relations
 //if team is full, displays error message
 function displayAddedPokemon() {
+  let storageArray = JSON.parse(localStorage.getItem("team"));
   $(".modal").removeClass("is-active")
   $("#save-team-message").empty()
-  if (counter < 6) {
+  if (storageArray.length < 6) {
     let new_pokemon = $("#team-list")
       .append(
         `<img class="pokemon-sprite" id="${pokemon_data.id}" src="${pokemon_data.sprite}"/>`
       )
       .append(`<button class="button is-small is-rounded is-ghost remove-pokemon"><i class="fas fa-minus-circle"></i></button>`);
-    counter++;
     addToLocalStorage(pokemon_data);
     getDamageRelations();
   } else $("#team-error").show();
 }
 
-//removes pokemon from local storage, decreases counter, and removes sprite from page
+//removes pokemon from local storage, and removes sprite from page
 function removePokemon() {
   removeFromLocalStorage.call($(this).prev());
   $("#save-team-message").empty()
   $("#team-error").hide();
   $(this).prev().remove();
   $(this).remove();
-  counter--;
   if ($("#team-list").text().length < 1){
     $("#save-team").hide()
   }
