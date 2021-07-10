@@ -2,7 +2,7 @@ from flask import Blueprint
 from flask.helpers import make_response
 from flask import request, render_template, g, jsonify
 from db_models.team_model import db, Team
-from pokemon_data import getPokemonData, getDamageRelations
+from pokemon_data import getPokemonData, getDamageRelations, calculateDualTypeDamageRelations
 
 builder = Blueprint("builder", __name__)
 
@@ -29,6 +29,8 @@ def get_damage_relations():
     data = {"data": []}
     for pokemon in team_data:
         relations = getDamageRelations(pokemon["types"])
+        if len(pokemon["types"]) > 1:
+            relations = calculateDualTypeDamageRelations(relations)
         data["data"].append(relations)
     return make_response(jsonify(data), 200)
 
