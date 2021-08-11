@@ -80,8 +80,7 @@ function displayTeamError() {
 let pokemon_data;
 async function processPokemonSearch(evt) {
   evt.preventDefault();
-  let name = $("#search-term").val().toLowerCase();
-
+  let name = $("#search-term").val().trim().toLowerCase();
   displayLoader();
   try {
     response = await axios
@@ -138,7 +137,7 @@ function displayAddedPokemon() {
   let storageArray = JSON.parse(localStorage.getItem("team"));
   $(".modal").removeClass("is-active")
   $("#save-team-message").empty()
-  if (storageArray.length < 6) {
+  if (storageArray == null || storageArray.length < 6 ) {
     let new_pokemon = $("#team-list")
       .append(
         `<img class="pokemon-sprite" id="${pokemon_data.id}" src="${pokemon_data.sprite}"/>`
@@ -187,10 +186,12 @@ $(document).ready(function(){
   });
   
 $(document).ready(function(){
-  if ($("#team-list").text().length > 0){
+  const teamList = JSON.parse(localStorage.getItem("team"))
+  if (teamList.length > 0){
     $("#save-team").show()
   }
 })
+
 $("#search-form").on("submit", processPokemonSearch);
 $("#add-btn").on("click", displayAddedPokemon);
 $("#team-list").on("click", ".remove-pokemon", removePokemon);
