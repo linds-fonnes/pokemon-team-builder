@@ -15,14 +15,16 @@ function loadLocalStorage() {
 }
 
 //adds pokemon data to local storage so that data persists on page reload and if user wants to register/login after building their team
-let team = [];
 function addToLocalStorage(data) {
   let new_pokemon = {};
   new_pokemon.id = data.id;
   new_pokemon.sprite = data.sprite;
   new_pokemon.types = data.types;
-  team.push(new_pokemon);
-  localStorage.setItem("team", JSON.stringify(team));
+
+  let team = []
+  team = JSON.parse(localStorage.getItem("team")) || []
+  team.push(new_pokemon)
+  localStorage.setItem("team", JSON.stringify(team))
   $("#save-team").show()
 }
 
@@ -155,7 +157,8 @@ function removePokemon() {
   $("#team-error").hide();
   $(this).prev().remove();
   $(this).remove();
-  if ($("#team-list").text().length < 1){
+  const teamList = JSON.parse(localStorage.getItem("team"))
+  if (teamList.length < 1){
     $("#save-team").hide()
   }
 }
