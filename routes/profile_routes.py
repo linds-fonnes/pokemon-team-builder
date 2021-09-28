@@ -1,7 +1,7 @@
 from flask import Blueprint
 from flask import redirect, render_template, flash, redirect, g
 from db_models.team_model import db, Team
-from pokemon_data import getPokemonData, getDamageRelations
+from pokemon_data import getPokemonData, getDamageRelations, calculateDualTypeDamageRelations
 
 profile = Blueprint("profile", __name__)
 
@@ -31,9 +31,12 @@ def display_team(team_id):
     data = {"data": []}
     for pokemon in team_data:
         relations = getDamageRelations(pokemon["types"])
+        if len(pokemon["types"]) > 1:
+            relations = calculateDualTypeDamageRelations(relations)
         data["data"].append(relations)
 
     return render_template("team_details.html", team_data=team_data, team=team, data=data)
+    
 
 
 @profile.route("/profile/<int:team_id>/delete", methods=["GET", "DELETE"])

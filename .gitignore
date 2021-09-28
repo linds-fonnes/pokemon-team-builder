@@ -2,3 +2,7 @@
 /__pycache__
 /.vscode
 /.gitignore
+server.csr
+server.key
+server.pass.key
+stackhawk.yml
