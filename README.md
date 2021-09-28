@@ -2,7 +2,7 @@
 
 ## Description
 ---
-[Pokemon Team Builder](https://pokemon-team-builder1.herokuapp.com/) is a website that allows Pokemon fans (casual or competitive) to create and save Pokemon teams along with viewing the overall team's damage relations. 
+[Pokemon Team Builder](https://www.pokemonteambuilder.tech/) is a website that allows Pokemon fans (casual or competitive) to create and save Pokemon teams along with viewing the overall team's damage relations. 
 
 There aren't many team builder sites available to begin with, but a commonality with the ones that are available, is that there is not a way to save your teams. This means users have to create a new team every time you access their site, even if it's a team that you replicate frequently. By creating my Pokemon Team Builder, users now have the option to create an account and save their teams for easy reference when needed.
 
